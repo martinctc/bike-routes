@@ -232,11 +232,42 @@ function renderSparkline(elementId, profile) {
 
     el.innerHTML =
         '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" class="sparkline-svg">' +
-            '<path d="' + fillPath + '" fill="url(#ele-grad-' + elementId + ')" />' +
-            '<path d="' + linePath + '" fill="none" stroke="var(--color-accent)" stroke-width="1.5" />' +
             '<defs><linearGradient id="ele-grad-' + elementId + '" x1="0" y1="0" x2="0" y2="1">' +
                 '<stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.2" />' +
                 '<stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0.02" />' +
             '</linearGradient></defs>' +
-        '</svg>';
+            '<path d="' + fillPath + '" fill="url(#ele-grad-' + elementId + ')" />' +
+            '<path d="' + linePath + '" fill="none" stroke="var(--color-accent)" stroke-width="1.5" />' +
+            '<line class="sparkline-cursor" x1="0" y1="0" x2="0" y2="' + h + '" />' +
+        '</svg>' +
+        '<div class="sparkline-tooltip"></div>';
+
+    var svg = el.querySelector('svg');
+    var cursor = el.querySelector('.sparkline-cursor');
+    var tip = el.querySelector('.sparkline-tooltip');
+
+    el.addEventListener('mousemove', function(e) {
+        var rect = svg.getBoundingClientRect();
+        var mouseX = e.clientX - rect.left;
+        var pct = mouseX / rect.width;
+        var dist = pct * maxDist;
+        if (dist < 0 || dist > maxDist) { cursor.style.display = 'none'; tip.style.display = 'none'; return; }
+
+        var closest = profile[0];
+        for (var j = 1; j < profile.length; j++) {
+            if (Math.abs(profile[j][0] - dist) < Math.abs(closest[0] - dist)) closest = profile[j];
+        }
+        var svgX = pct * w;
+        cursor.setAttribute('x1', svgX);
+        cursor.setAttribute('x2', svgX);
+        cursor.style.display = '';
+        tip.style.display = 'block';
+        tip.style.left = mouseX + 'px';
+        tip.textContent = closest[1] + 'm · ' + closest[0].toFixed(1) + 'km';
+    });
+
+    el.addEventListener('mouseleave', function() {
+        cursor.style.display = 'none';
+        tip.style.display = 'none';
+    });
 }

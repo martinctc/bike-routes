@@ -6,6 +6,29 @@
     "type": "out-and-back",
     "terrain": "all the hills",
     "description": "The queen stage of Mallorca cycling. This epic ride from Port de Pollença tackles the legendary Sa Calobra climb, widely regarded as one of the most iconic ascents in European cycling. The route weaves through the Tramuntana mountains, climbing the Coll de Femenia and passing through Lluc before the dramatic descent to the coast on a road carved into the cliffs with 26 hairpin bends and a famous 270-degree spiral bridge. There is no other way out: you must climb back up the same spectacular road you descended. Expect breathtaking Mediterranean views at every turn and bring your climbing legs.",
+    "stops": [
+      {
+        "name": "Café Santuari de Lluc",
+        "type": "coffee",
+        "lat": 39.8236,
+        "lon": 2.8856,
+        "note": "Refuel at the monastery café before the big climb."
+      },
+      {
+        "name": "Mirador de Sa Calobra",
+        "type": "photo",
+        "lat": 39.851,
+        "lon": 2.809,
+        "note": "Jaw-dropping views from the top before the descent."
+      },
+      {
+        "name": "Sa Calobra beach",
+        "type": "rest",
+        "lat": 39.8516,
+        "lon": 2.7963,
+        "note": "Cool off at the turquoise cove at the bottom. Earn the climb back up."
+      }
+    ],
     "region": "Mallorca",
     "coordinates": [
       [
@@ -1398,6 +1421,29 @@
     "type": "loop",
     "terrain": "some hills",
     "description": "A classic Tramuntana ride to the ancient Santuari de Lluc, the spiritual heart of Mallorca and a place of pilgrimage since the 13th century. The main challenge is the steady, well-graded climb up the Coll de Sa Batalla, rewarded with sweeping mountain views and the peaceful monastery grounds where you can refuel at the café. The descent is fast and flowing, and the route loops through quiet mountain roads lined with centuries-old olive groves and fragrant pine forests. A perfect introduction to Mallorca's mountain roads.",
+    "stops": [
+      {
+        "name": "Café Ca'n Molinas",
+        "type": "coffee",
+        "lat": 39.8762,
+        "lon": 2.9005,
+        "note": "Popular cyclist café in Caimari at the foot of the climb."
+      },
+      {
+        "name": "Santuari de Lluc",
+        "type": "rest",
+        "lat": 39.8236,
+        "lon": 2.8856,
+        "note": "The monastery has a café, gardens, and a small museum."
+      },
+      {
+        "name": "Coll de Sa Batalla",
+        "type": "photo",
+        "lat": 39.831,
+        "lon": 2.8735,
+        "note": "Celebrate the summit with mountain views."
+      }
+    ],
     "region": "Mallorca",
     "coordinates": [
       [
@@ -2198,6 +2244,29 @@
     "type": "out-and-back",
     "terrain": "some hills",
     "description": "A stunning coastal ride to the Cap de Formentor lighthouse at the northernmost tip of Mallorca. Several punchy climbs punctuate this dramatic road, which clings to the sea cliffs with dizzying drops and breathtaking panoramas. The ascent to Mirador de Sa Creueta offers one of the island's most photographed viewpoints, with the rocky islet of Es Colomer far below. The road surface is excellent and the scenery is world-class. Carry extra water as there are limited stops, and watch for the tunnels cut through the rock near the lighthouse.",
+    "stops": [
+      {
+        "name": "Mirador de Sa Creueta",
+        "type": "photo",
+        "lat": 39.9303,
+        "lon": 3.1408,
+        "note": "The iconic viewpoint over Es Colomer rock and the coast."
+      },
+      {
+        "name": "Platja de Formentor",
+        "type": "rest",
+        "lat": 39.934,
+        "lon": 3.1355,
+        "note": "Pine-shaded beach perfect for a quick dip."
+      },
+      {
+        "name": "Far de Formentor",
+        "type": "photo",
+        "lat": 39.9627,
+        "lon": 3.2133,
+        "note": "The lighthouse at the end of the road. Worth every pedal stroke."
+      }
+    ],
     "region": "Mallorca",
     "coordinates": [
       [
@@ -2838,6 +2907,29 @@
     "type": "loop",
     "terrain": "flat",
     "description": "A long flat loop through Mallorca's agricultural heartland, the Es Pla central plain. The route passes through the charming market towns of Sineu, with its famous Wednesday market, and Petra, birthplace of Fray Junípero Serra who founded the California missions. Expect wide-open views of farmland, ancient windmills, and vineyards on quiet rural roads with minimal traffic. Perfect for building endurance on a long ride or enjoying a social outing without the stress of mountain climbing.",
+    "stops": [
+      {
+        "name": "Sineu Market Square",
+        "type": "coffee",
+        "lat": 39.644,
+        "lon": 3.0018,
+        "note": "Stop for a cortado in the main square. Wednesday market is a must."
+      },
+      {
+        "name": "Casa Museu Fra Juníper Serra",
+        "type": "photo",
+        "lat": 39.6108,
+        "lon": 3.1077,
+        "note": "The birthplace museum in Petra — a quick cultural stop."
+      },
+      {
+        "name": "Sa Pobla",
+        "type": "rest",
+        "lat": 39.7686,
+        "lon": 3.0215,
+        "note": "Good bakeries and a shaded town square for a rest."
+      }
+    ],
     "region": "Mallorca",
     "coordinates": [
       [
@@ -3622,6 +3714,29 @@
     "type": "loop",
     "terrain": "flat",
     "description": "A relaxed flat loop from Port de Pollença through the northern coastal plains. This route follows quiet roads through the S'Albufera wetlands nature reserve and nearby farming villages, offering easy spinning with the dramatic Tramuntana mountains as a constant backdrop. Birdwatchers will enjoy passing the marshes, home to over 200 species. Ideal as a recovery ride after tackling the mountains, or a gentle introduction to cycling in Mallorca.",
+    "stops": [
+      {
+        "name": "S'Albufera Nature Reserve",
+        "type": "photo",
+        "lat": 39.8015,
+        "lon": 3.103,
+        "note": "Pause at the wetlands — over 200 bird species call this home."
+      },
+      {
+        "name": "Café Alcúdia old town",
+        "type": "coffee",
+        "lat": 39.8527,
+        "lon": 3.1211,
+        "note": "Detour into the walled old town for an excellent espresso."
+      },
+      {
+        "name": "Platja de Muro",
+        "type": "rest",
+        "lat": 39.793,
+        "lon": 3.1205,
+        "note": "White sand beach just off the route for a rest stop."
+      }
+    ],
     "region": "Mallorca",
     "coordinates": [
       [

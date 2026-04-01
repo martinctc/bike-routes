@@ -69,7 +69,15 @@ route_meta = {
             "bends and a famous 270-degree spiral bridge. There is no other way out: you "
             "must climb back up the same spectacular road you descended. Expect breathtaking "
             "Mediterranean views at every turn and bring your climbing legs."
-        )
+        ),
+        'stops': [
+            {'name': 'Café Santuari de Lluc', 'type': 'coffee', 'lat': 39.8236, 'lon': 2.8856,
+             'note': 'Refuel at the monastery café before the big climb.'},
+            {'name': 'Mirador de Sa Calobra', 'type': 'photo', 'lat': 39.8510, 'lon': 2.8090,
+             'note': 'Jaw-dropping views from the top before the descent.'},
+            {'name': 'Sa Calobra beach', 'type': 'rest', 'lat': 39.8516, 'lon': 2.7963,
+             'note': 'Cool off at the turquoise cove at the bottom. Earn the climb back up.'},
+        ]
     },
     'Port de Pollenca - Formentor and back.gpx': {
         'id': 'formentor',
@@ -85,7 +93,15 @@ route_meta = {
             "with the rocky islet of Es Colomer far below. The road surface is excellent and "
             "the scenery is world-class. Carry extra water as there are limited stops, and "
             "watch for the tunnels cut through the rock near the lighthouse."
-        )
+        ),
+        'stops': [
+            {'name': 'Mirador de Sa Creueta', 'type': 'photo', 'lat': 39.9303, 'lon': 3.1408,
+             'note': 'The iconic viewpoint over Es Colomer rock and the coast.'},
+            {'name': 'Platja de Formentor', 'type': 'rest', 'lat': 39.9340, 'lon': 3.1355,
+             'note': 'Pine-shaded beach perfect for a quick dip.'},
+            {'name': 'Far de Formentor', 'type': 'photo', 'lat': 39.9627, 'lon': 3.2133,
+             'note': 'The lighthouse at the end of the road. Worth every pedal stroke.'},
+        ]
     },
     'Pollensa to Santuari de Lluc and back.gpx': {
         'id': 'pollensa-lluc',
@@ -101,7 +117,15 @@ route_meta = {
             "The descent is fast and flowing, and the route loops through quiet mountain roads "
             "lined with centuries-old olive groves and fragrant pine forests. A perfect "
             "introduction to Mallorca's mountain roads."
-        )
+        ),
+        'stops': [
+            {'name': 'Café Ca\'n Molinas', 'type': 'coffee', 'lat': 39.8762, 'lon': 2.9005,
+             'note': 'Popular cyclist café in Caimari at the foot of the climb.'},
+            {'name': 'Santuari de Lluc', 'type': 'rest', 'lat': 39.8236, 'lon': 2.8856,
+             'note': 'The monastery has a café, gardens, and a small museum.'},
+            {'name': 'Coll de Sa Batalla', 'type': 'photo', 'lat': 39.8310, 'lon': 2.8735,
+             'note': 'Celebrate the summit with mountain views.'},
+        ]
     },
     'Pollença, Sineu, Petra - FLAT.gpx': {
         'id': 'pollenca-sineu-petra',
@@ -117,7 +141,15 @@ route_meta = {
             "and vineyards on quiet rural roads with minimal traffic. Perfect for building "
             "endurance on a long ride or enjoying a social outing without the stress of "
             "mountain climbing."
-        )
+        ),
+        'stops': [
+            {'name': 'Sineu Market Square', 'type': 'coffee', 'lat': 39.6440, 'lon': 3.0018,
+             'note': 'Stop for a cortado in the main square. Wednesday market is a must.'},
+            {'name': 'Casa Museu Fra Juníper Serra', 'type': 'photo', 'lat': 39.6108, 'lon': 3.1077,
+             'note': 'The birthplace museum in Petra — a quick cultural stop.'},
+            {'name': 'Sa Pobla', 'type': 'rest', 'lat': 39.7686, 'lon': 3.0215,
+             'note': 'Good bakeries and a shaded town square for a rest.'},
+        ]
     },
     'Port de Pollenca - flat runde.gpx': {
         'id': 'port-pollenca-flat',
@@ -132,7 +164,15 @@ route_meta = {
             "mountains as a constant backdrop. Birdwatchers will enjoy passing the marshes, "
             "home to over 200 species. Ideal as a recovery ride after tackling the mountains, "
             "or a gentle introduction to cycling in Mallorca."
-        )
+        ),
+        'stops': [
+            {'name': 'S\'Albufera Nature Reserve', 'type': 'photo', 'lat': 39.8015, 'lon': 3.1030,
+             'note': 'Pause at the wetlands — over 200 bird species call this home.'},
+            {'name': 'Café Alcúdia old town', 'type': 'coffee', 'lat': 39.8527, 'lon': 3.1211,
+             'note': 'Detour into the walled old town for an excellent espresso.'},
+            {'name': 'Platja de Muro', 'type': 'rest', 'lat': 39.7930, 'lon': 3.1205,
+             'note': 'White sand beach just off the route for a rest stop.'},
+        ]
     }
 }
 

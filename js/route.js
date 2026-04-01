@@ -75,10 +75,45 @@ function renderMap(route) {
         L.marker(coords[0], { icon: startIcon }).addTo(map).bindPopup('Start');
         L.marker(coords[coords.length - 1], { icon: endIcon }).addTo(map).bindPopup('Finish');
     }
+
+    // Recommended stop markers
+    if (route.stops && route.stops.length) {
+        var stopColors = { coffee: '#92400e', photo: '#1e40af', rest: '#065f46' };
+        var stopEmoji = { coffee: '☕', photo: '📷', rest: '⛱' };
+        route.stops.forEach(function(s) {
+            var color = stopColors[s.type] || '#6b7280';
+            var emoji = stopEmoji[s.type] || '📍';
+            var icon = L.divIcon({
+                className: 'custom-marker',
+                html: '<div style="width:24px;height:24px;border-radius:50%;background:' + color + ';border:2.5px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:12px;">' + emoji + '</div>',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12]
+            });
+            L.marker([s.lat, s.lon], { icon: icon }).addTo(map)
+                .bindPopup('<strong>' + s.name + '</strong><br>' + s.note);
+        });
+    }
 }
 
 function renderDetail(route) {
     const detail = document.getElementById('route-detail');
+
+    var stopsHtml = '';
+    if (route.stops && route.stops.length) {
+        stopsHtml = '<div class="stops-section">' +
+            '<h2 class="stops-heading">Recommended stops</h2>' +
+            '<div class="stops-list">' +
+            route.stops.map(function(s) {
+                return '<div class="stop-item">' +
+                    '<span class="stop-icon">' + stopIcon(s.type) + '</span>' +
+                    '<div class="stop-info">' +
+                        '<span class="stop-name">' + s.name + '</span>' +
+                        '<span class="stop-note">' + s.note + '</span>' +
+                    '</div>' +
+                '</div>';
+            }).join('') +
+            '</div></div>';
+    }
 
     detail.innerHTML =
         '<h1 class="route-detail-name">' + route.name + '</h1>' +
@@ -94,6 +129,7 @@ function renderDetail(route) {
         '</div>' +
         '<div class="elevation-chart" id="elevation-chart"></div>' +
         '<p class="route-detail-description">' + route.description + '</p>' +
+        stopsHtml +
         '<a class="download-btn" href="' + route.gpx + '" download>' +
             downloadIcon() +
             'Download GPX' +
@@ -107,6 +143,11 @@ function stat(value, label) {
         '<span class="stat-value">' + value + '</span>' +
         '<span class="stat-label">' + label + '</span>' +
     '</div>';
+}
+
+function stopIcon(type) {
+    var icons = { coffee: '☕', photo: '📷', rest: '⛱' };
+    return icons[type] || '📍';
 }
 
 function terrainTag(terrain) {
