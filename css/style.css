@@ -123,6 +123,114 @@ img {
     border-color: var(--color-text);
 }
 
+/* ---- Range Sliders ---- */
+.sliders {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+    padding: 0 0.5rem;
+}
+
+.slider-group {
+    flex: 1;
+    min-width: 200px;
+    max-width: 320px;
+}
+
+.slider-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+}
+
+.slider-label span {
+    font-weight: 500;
+    color: var(--color-text);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.range-wrap {
+    position: relative;
+    height: 32px;
+}
+
+.range-input {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 100%;
+    height: 4px;
+    margin: 0;
+    pointer-events: none;
+    background: none;
+    outline: none;
+    z-index: 2;
+}
+
+.range-min {
+    background: var(--color-border);
+    border-radius: 2px;
+    z-index: 1;
+}
+
+.range-track {
+    position: absolute;
+    top: 8px;
+    height: 4px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Thumb styles */
+.range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 2.5px solid var(--color-accent);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    cursor: pointer;
+    pointer-events: all;
+    position: relative;
+    z-index: 3;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.range-input::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.range-input::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 2.5px solid var(--color-accent);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.range-input::-moz-range-track {
+    background: transparent;
+    border: none;
+    height: 4px;
+}
+
 /* ---- Route Count ---- */
 .route-count {
     text-align: center;
@@ -480,6 +588,16 @@ img {
 
     .site-subtitle {
         font-size: 1rem;
+    }
+
+    .sliders {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .slider-group {
+        max-width: none;
     }
 
     .routes-grid {

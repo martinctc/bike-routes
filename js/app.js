@@ -9,6 +9,8 @@ const ROUTE_WEIGHT = 3;
 
 let allRoutes = [];
 let activeFilter = 'all';
+let distRange = [0, Infinity];
+let eleRange = [0, Infinity];
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -19,8 +21,9 @@ async function init() {
     try {
         const res = await fetch('data/routes.json');
         allRoutes = await res.json();
-        renderRoutes(allRoutes);
+        setupSliders();
         setupFilters();
+        applyFilters();
     } catch (err) {
         grid.innerHTML = '<div class="loading">Failed to load routes.</div>';
         console.error(err);
@@ -103,14 +106,77 @@ function setupFilters() {
             buttons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             activeFilter = btn.dataset.filter;
-
-            const filtered = activeFilter === 'all'
-                ? allRoutes
-                : allRoutes.filter(r => r.terrain === activeFilter);
-
-            renderRoutes(filtered);
+            applyFilters();
         });
     });
+}
+
+function setupSliders() {
+    var dists = allRoutes.map(r => r.distance_km);
+    var eles = allRoutes.map(r => r.elevation_m);
+
+    var dMin = Math.min.apply(null, dists);
+    var dMax = Math.max.apply(null, dists);
+    var eMin = Math.min.apply(null, eles);
+    var eMax = Math.max.apply(null, eles);
+
+    distRange = [dMin, dMax];
+    eleRange = [eMin, eMax];
+
+    initRangeSlider('dist-min', 'dist-max', 'dist-label', 'dist-track', dMin, dMax, ' km', function(lo, hi) {
+        distRange = [lo, hi];
+        applyFilters();
+    });
+    initRangeSlider('ele-min', 'ele-max', 'ele-label', 'ele-track', eMin, eMax, ' m', function(lo, hi) {
+        eleRange = [lo, hi];
+        applyFilters();
+    });
+}
+
+function initRangeSlider(minId, maxId, labelId, trackId, lo, hi, unit, onChange) {
+    var minEl = document.getElementById(minId);
+    var maxEl = document.getElementById(maxId);
+    var labelEl = document.getElementById(labelId);
+    var trackEl = document.getElementById(trackId);
+
+    minEl.min = maxEl.min = lo;
+    minEl.max = maxEl.max = hi;
+    minEl.value = lo;
+    maxEl.value = hi;
+
+    function update() {
+        var vMin = parseInt(minEl.value);
+        var vMax = parseInt(maxEl.value);
+        if (vMin > vMax) {
+            // Swap if dragged past each other
+            var tmp = vMin; vMin = vMax; vMax = tmp;
+            minEl.value = vMin;
+            maxEl.value = vMax;
+        }
+        labelEl.textContent = vMin + unit + ' – ' + vMax + unit;
+
+        // Highlight track between thumbs
+        var pctMin = ((vMin - lo) / (hi - lo)) * 100;
+        var pctMax = ((vMax - lo) / (hi - lo)) * 100;
+        trackEl.style.left = pctMin + '%';
+        trackEl.style.width = (pctMax - pctMin) + '%';
+
+        onChange(vMin, vMax);
+    }
+
+    minEl.addEventListener('input', update);
+    maxEl.addEventListener('input', update);
+    update();
+}
+
+function applyFilters() {
+    var filtered = allRoutes.filter(function(r) {
+        if (activeFilter !== 'all' && r.terrain !== activeFilter) return false;
+        if (r.distance_km < distRange[0] || r.distance_km > distRange[1]) return false;
+        if (r.elevation_m < eleRange[0] || r.elevation_m > eleRange[1]) return false;
+        return true;
+    });
+    renderRoutes(filtered);
 }
 
 function terrainTag(terrain) {

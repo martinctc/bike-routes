@@ -27,6 +27,25 @@
             <button class="filter-btn" data-filter="flat">Flat</button>
         </div>
 
+        <div class="sliders" id="sliders">
+            <div class="slider-group">
+                <label class="slider-label">Distance <span id="dist-label"></span></label>
+                <div class="range-wrap">
+                    <input type="range" id="dist-min" class="range-input range-min" />
+                    <input type="range" id="dist-max" class="range-input range-max" />
+                    <div class="range-track" id="dist-track"></div>
+                </div>
+            </div>
+            <div class="slider-group">
+                <label class="slider-label">Elevation <span id="ele-label"></span></label>
+                <div class="range-wrap">
+                    <input type="range" id="ele-min" class="range-input range-min" />
+                    <input type="range" id="ele-max" class="range-input range-max" />
+                    <div class="range-track" id="ele-track"></div>
+                </div>
+            </div>
+        </div>
+
         <div class="route-count" id="route-count"></div>
 
         <div class="routes-grid" id="routes-grid">
