@@ -50,6 +50,7 @@ function renderRoutes(routes) {
                     '<span>' + svgIcon('distance') + route.distance_km + ' km</span>' +
                     '<span>' + svgIcon('elevation') + route.elevation_m + ' m</span>' +
                 '</div>' +
+                '<div class="route-card-elevation" id="card-ele-' + i + '"></div>' +
                 '<p class="route-card-description">' + route.description + '</p>' +
                 '<div class="route-card-tags">' +
                     terrainTag(route.terrain) +
@@ -59,8 +60,11 @@ function renderRoutes(routes) {
 
         grid.appendChild(card);
 
-        // Render mini map after card is in DOM
-        requestAnimationFrame(() => renderCardMap(mapId, route.coordinates));
+        // Render mini map and sparkline after card is in DOM
+        requestAnimationFrame(() => {
+            renderCardMap(mapId, route.coordinates);
+            renderSparkline('card-ele-' + i, route.elevation_profile);
+        });
     });
 }
 
@@ -134,4 +138,39 @@ function svgIcon(type) {
         return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20l7.5-12L14 14l4-6 4 12H2z"/></svg>';
     }
     return '';
+}
+
+function renderSparkline(elementId, profile) {
+    var el = document.getElementById(elementId);
+    if (!el || !profile || profile.length < 2) return;
+
+    var w = el.clientWidth || 280;
+    var h = 48;
+    var dists = profile.map(function(p) { return p[0]; });
+    var eles = profile.map(function(p) { return p[1]; });
+    var minEle = Math.min.apply(null, eles);
+    var maxEle = Math.max.apply(null, eles);
+    var maxDist = dists[dists.length - 1];
+    var eleRange = maxEle - minEle || 1;
+    var pad = 2;
+
+    var points = profile.map(function(p) {
+        var x = (p[0] / maxDist) * w;
+        var y = h - pad - ((p[1] - minEle) / eleRange) * (h - pad * 2);
+        return x.toFixed(1) + ',' + y.toFixed(1);
+    });
+
+    // Closed polygon for fill
+    var fillPath = 'M0,' + h + ' L' + points.join(' L') + ' L' + w + ',' + h + ' Z';
+    var linePath = 'M' + points.join(' L');
+
+    el.innerHTML =
+        '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" class="sparkline-svg">' +
+            '<path d="' + fillPath + '" fill="url(#ele-grad-' + elementId + ')" />' +
+            '<path d="' + linePath + '" fill="none" stroke="var(--color-accent)" stroke-width="1.5" />' +
+            '<defs><linearGradient id="ele-grad-' + elementId + '" x1="0" y1="0" x2="0" y2="1">' +
+                '<stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.2" />' +
+                '<stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0.02" />' +
+            '</linearGradient></defs>' +
+        '</svg>';
 }

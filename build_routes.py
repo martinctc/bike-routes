@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import os, math, json
+import os, math, json, time, urllib.request
 
 gpx_dir = r'C:\Users\martinchan\OneDrive\Triathlon\bike-routes\gpx\majorca'
 ns = {'gpx': 'http://www.topografix.com/GPX/1/1'}
@@ -18,6 +18,40 @@ def simplify_coords(trkpts, sample_rate=15):
         if i % sample_rate == 0 or i == len(trkpts) - 1:
             coords.append([round(float(pt.get('lat')), 5), round(float(pt.get('lon')), 5)])
     return coords
+
+def fetch_elevations(coords, batch_size=100):
+    """Fetch elevation data from Open-Elevation API for a list of [lat, lon] pairs."""
+    elevations = []
+    for i in range(0, len(coords), batch_size):
+        batch = coords[i:i + batch_size]
+        locations = [{"latitude": c[0], "longitude": c[1]} for c in batch]
+        payload = json.dumps({"locations": locations}).encode('utf-8')
+        req = urllib.request.Request(
+            'https://api.open-elevation.com/api/v1/lookup',
+            data=payload,
+            headers={'Content-Type': 'application/json', 'Accept': 'application/json'}
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode('utf-8'))
+                elevations.extend([r['elevation'] for r in data['results']])
+        except Exception as e:
+            print(f'  Warning: elevation fetch failed for batch {i}: {e}')
+            elevations.extend([None] * len(batch))
+        if i + batch_size < len(coords):
+            time.sleep(1)
+    return elevations
+
+def build_elevation_profile(coords, elevations):
+    """Build elevation profile with cumulative distance (km) and elevation (m)."""
+    profile = []
+    cum_dist = 0.0
+    for i, (coord, ele) in enumerate(zip(coords, elevations)):
+        if i > 0:
+            cum_dist += haversine(coords[i-1][0], coords[i-1][1], coord[0], coord[1]) / 1000.0
+        if ele is not None:
+            profile.append([round(cum_dist, 2), round(ele)])
+    return profile
 
 route_meta = {
     'Karoo-Port_de_Pollenca_-_Sa_Calobra_and_back.gpx': {
@@ -125,6 +159,12 @@ for f in sorted(os.listdir(gpx_dir)):
     meta['region'] = 'Mallorca'
     meta['coordinates'] = coords
     meta['gpx'] = 'gpx/majorca/' + f
+
+    print(f"  Fetching elevations for {meta['id']} ({len(coords)} points)...")
+    elevations = fetch_elevations(coords)
+    meta['elevation_profile'] = build_elevation_profile(coords, elevations)
+    print(f"    → {len(meta['elevation_profile'])} elevation points")
+
     routes.append(meta)
 
 terrain_order = {'all the hills': 0, 'some hills': 1, 'flat': 2}
