@@ -132,10 +132,10 @@ function typeTag(type) {
 
 function svgIcon(type) {
     if (type === 'distance') {
-        return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/></svg>';
+        return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>';
     }
     if (type === 'elevation') {
-        return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20l7.5-12L14 14l4-6 4 12H2z"/></svg>';
+        return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 10 6l4 6 5-8 2 16H3z"/></svg>';
     }
     return '';
 }
