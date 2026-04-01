@@ -124,6 +124,7 @@ function renderDetail(route) {
             stat(route.region, 'Region') +
         '</div>' +
         '<div class="route-detail-tags">' +
+            difficultyTag(route.difficulty) +
             terrainTag(route.terrain) +
             typeTag(route.type) +
         '</div>' +
@@ -157,6 +158,11 @@ function terrainTag(terrain) {
         'all the hills': 'tag--allhills'
     };
     return '<span class="tag ' + (cls[terrain] || '') + '">' + terrain + '</span>';
+}
+
+function difficultyTag(difficulty) {
+    var cls = { easy: 'tag--easy', medium: 'tag--medium', hard: 'tag--hard' };
+    return '<span class="tag ' + (cls[difficulty] || '') + '">' + difficulty + '</span>';
 }
 
 function typeTag(type) {

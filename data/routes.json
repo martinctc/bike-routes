@@ -1412,7 +1412,8 @@
       ]
     ],
     "distance_km": 94,
-    "elevation_m": 2011
+    "elevation_m": 2011,
+    "difficulty": "hard"
   },
   {
     "id": "pollensa-lluc",
@@ -2235,7 +2236,8 @@
       ]
     ],
     "distance_km": 64,
-    "elevation_m": 913
+    "elevation_m": 913,
+    "difficulty": "medium"
   },
   {
     "id": "formentor",
@@ -2898,7 +2900,8 @@
       ]
     ],
     "distance_km": 40,
-    "elevation_m": 871
+    "elevation_m": 871,
+    "difficulty": "hard"
   },
   {
     "id": "pollenca-sineu-petra",
@@ -3705,7 +3708,8 @@
       ]
     ],
     "distance_km": 83,
-    "elevation_m": 584
+    "elevation_m": 584,
+    "difficulty": "medium"
   },
   {
     "id": "port-pollenca-flat",
@@ -4352,6 +4356,7 @@
       ]
     ],
     "distance_km": 66,
-    "elevation_m": 400
+    "elevation_m": 400,
+    "difficulty": "easy"
   }
 ]

@@ -56,6 +56,7 @@ function renderRoutes(routes) {
                 '<div class="route-card-elevation" id="card-ele-' + i + '"></div>' +
                 '<p class="route-card-description">' + route.description + '</p>' +
                 '<div class="route-card-tags">' +
+                    difficultyTag(route.difficulty) +
                     terrainTag(route.terrain) +
                     typeTag(route.type) +
                 '</div>' +
@@ -186,6 +187,11 @@ function terrainTag(terrain) {
         'all the hills': 'tag--allhills'
     };
     return '<span class="tag ' + (cls[terrain] || '') + '">' + terrain + '</span>';
+}
+
+function difficultyTag(difficulty) {
+    var cls = { easy: 'tag--easy', medium: 'tag--medium', hard: 'tag--hard' };
+    return '<span class="tag ' + (cls[difficulty] || '') + '">' + difficulty + '</span>';
 }
 
 function typeTag(type) {

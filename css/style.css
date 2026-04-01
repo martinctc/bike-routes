@@ -356,6 +356,21 @@ img {
     color: #1e40af;
 }
 
+.tag--easy {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.tag--medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.tag--hard {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
 /* ---- Route Detail Page ---- */
 .route-header {
     padding: 1rem 0;

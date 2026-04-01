@@ -192,7 +192,17 @@ for f in sorted(os.listdir(gpx_dir)):
     meta['elevation_profile'] = build_elevation_profile(coords, elevations)
     meta['distance_km'], meta['elevation_m'] = compute_full_stats(trkpts)
 
-    print(f"  {meta['id']}: {meta['distance_km']}km, {meta['elevation_m']}m gain, {len(coords)} coords")
+    # Difficulty score: weighted combination of distance, elevation, and steepness
+    steepness = meta['elevation_m'] / max(meta['distance_km'], 1)
+    score = meta['distance_km'] * 0.3 + meta['elevation_m'] * 0.04 + steepness * 3
+    if score < 60:
+        meta['difficulty'] = 'easy'
+    elif score < 100:
+        meta['difficulty'] = 'medium'
+    else:
+        meta['difficulty'] = 'hard'
+
+    print(f"  {meta['id']}: {meta['distance_km']}km, {meta['elevation_m']}m gain, difficulty={meta['difficulty']} (score={score:.0f})")
     routes.append(meta)
 
 terrain_order = {'all the hills': 0, 'some hills': 1, 'flat': 2}
