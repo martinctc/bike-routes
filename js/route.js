@@ -28,7 +28,14 @@ async function init() {
             return;
         }
 
-        document.title = route.name + ' – Bike Routes';
+        // Update back link to point to the route's region
+        var backLink = document.querySelector('.back-link');
+        if (backLink && route.region_id) {
+            backLink.href = 'region.html?id=' + route.region_id;
+            backLink.textContent = '← ' + route.region;
+        }
+
+        document.title = route.name + ' – ' + route.region + ' – Bike Routes';
         renderMap(route);
         renderDetail(route);
     } catch (err) {

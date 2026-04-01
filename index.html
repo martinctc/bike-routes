@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bike Routes – Mallorca</title>
-    <meta name="description" content="A curated collection of cycling routes around Mallorca. Maps, distances, elevation, and descriptions for every ride.">
+    <title>Bike Routes</title>
+    <meta name="description" content="A curated collection of cycling routes across Mallorca, Girona, and Calpe. Maps, distances, elevation, and descriptions for every ride.">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,41 +15,13 @@
     <header class="site-header">
         <div class="container">
             <h1 class="site-title">Bike Routes</h1>
-            <p class="site-subtitle">A curated collection of two-wheeled adventures around Mallorca.</p>
+            <p class="site-subtitle">A curated collection of two-wheeled adventures across Spain.</p>
         </div>
     </header>
 
     <main class="container">
-        <div class="filters" id="filters">
-            <button class="filter-btn active" data-filter="all">All routes</button>
-            <button class="filter-btn" data-filter="all the hills">All the hills</button>
-            <button class="filter-btn" data-filter="some hills">Some hills</button>
-            <button class="filter-btn" data-filter="flat">Flat</button>
-        </div>
-
-        <div class="sliders" id="sliders">
-            <div class="slider-group">
-                <label class="slider-label">Distance <span id="dist-label"></span></label>
-                <div class="range-wrap">
-                    <input type="range" id="dist-min" class="range-input range-min" />
-                    <input type="range" id="dist-max" class="range-input range-max" />
-                    <div class="range-track" id="dist-track"></div>
-                </div>
-            </div>
-            <div class="slider-group">
-                <label class="slider-label">Elevation <span id="ele-label"></span></label>
-                <div class="range-wrap">
-                    <input type="range" id="ele-min" class="range-input range-min" />
-                    <input type="range" id="ele-max" class="range-input range-max" />
-                    <div class="range-track" id="ele-track"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="route-count" id="route-count"></div>
-
-        <div class="routes-grid" id="routes-grid">
-            <!-- Route cards injected by JS -->
+        <div class="regions-grid" id="regions-grid">
+            <!-- Region cards injected by JS -->
         </div>
     </main>
 
@@ -60,6 +32,6 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/home.js"></script>
 </body>
 </html>

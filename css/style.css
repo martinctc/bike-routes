@@ -239,6 +239,76 @@ img {
     margin-bottom: 2rem;
 }
 
+/* ---- Regions Grid ---- */
+.regions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+    padding-bottom: 4rem;
+}
+
+.region-card {
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: transform var(--transition), box-shadow var(--transition);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+}
+
+.region-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    color: inherit;
+}
+
+.region-card-map {
+    height: 240px;
+    background: #f0ede8;
+}
+
+.region-card-body {
+    padding: 1.5rem;
+}
+
+.region-card-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.region-card-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+.region-card-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.back-home {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.back-home:hover {
+    color: var(--color-text);
+}
+
 /* ---- Routes Grid ---- */
 .routes-grid {
     display: grid;

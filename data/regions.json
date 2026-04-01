@@ -1,0 +1,35 @@
+[
+  {
+    "id": "mallorca",
+    "name": "Mallorca",
+    "subtitle": "Tramuntana mountains, coastal cliffs, and the central plain.",
+    "center": [
+      39.7,
+      2.95
+    ],
+    "route_count": 5,
+    "total_km": 347
+  },
+  {
+    "id": "girona",
+    "name": "Girona",
+    "subtitle": "The cycling capital of Europe — Costa Brava and volcanic hills.",
+    "center": [
+      41.98,
+      2.82
+    ],
+    "route_count": 2,
+    "total_km": 188
+  },
+  {
+    "id": "calpe",
+    "name": "Calpe",
+    "subtitle": "Sun-soaked climbs on the Costa Blanca.",
+    "center": [
+      38.64,
+      -0.05
+    ],
+    "route_count": 4,
+    "total_km": 300
+  }
+]
