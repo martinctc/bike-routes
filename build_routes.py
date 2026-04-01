@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import os, math, json, time, urllib.request
+import os, math, json
 
 gpx_dir = r'C:\Users\martinchan\OneDrive\Triathlon\bike-routes\gpx\majorca'
 ns = {'gpx': 'http://www.topografix.com/GPX/1/1'}
@@ -12,35 +12,16 @@ def haversine(lat1, lon1, lat2, lon2):
     a = math.sin(dp/2)**2 + math.cos(p1)*math.cos(p2)*math.sin(dl/2)**2
     return R * 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 
-def simplify_coords(trkpts, sample_rate=15):
+def simplify_with_elevation(trkpts, sample_rate=15):
+    """Sample trackpoints, returning coords and elevations from embedded GPX data."""
     coords = []
+    elevations = []
     for i, pt in enumerate(trkpts):
         if i % sample_rate == 0 or i == len(trkpts) - 1:
             coords.append([round(float(pt.get('lat')), 5), round(float(pt.get('lon')), 5)])
-    return coords
-
-def fetch_elevations(coords, batch_size=100):
-    """Fetch elevation data from Open-Elevation API for a list of [lat, lon] pairs."""
-    elevations = []
-    for i in range(0, len(coords), batch_size):
-        batch = coords[i:i + batch_size]
-        locations = [{"latitude": c[0], "longitude": c[1]} for c in batch]
-        payload = json.dumps({"locations": locations}).encode('utf-8')
-        req = urllib.request.Request(
-            'https://api.open-elevation.com/api/v1/lookup',
-            data=payload,
-            headers={'Content-Type': 'application/json', 'Accept': 'application/json'}
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                data = json.loads(resp.read().decode('utf-8'))
-                elevations.extend([r['elevation'] for r in data['results']])
-        except Exception as e:
-            print(f'  Warning: elevation fetch failed for batch {i}: {e}')
-            elevations.extend([None] * len(batch))
-        if i + batch_size < len(coords):
-            time.sleep(1)
-    return elevations
+            ele_el = pt.find('gpx:ele', ns)
+            elevations.append(round(float(ele_el.text), 1) if ele_el is not None else None)
+    return coords, elevations
 
 def build_elevation_profile(coords, elevations):
     """Build elevation profile with cumulative distance (km) and elevation (m)."""
@@ -54,7 +35,7 @@ def build_elevation_profile(coords, elevations):
     return profile
 
 route_meta = {
-    'Karoo-Port_de_Pollenca_-_Sa_Calobra_and_back.gpx': {
+    'Port de Pollenca - Sa Calobra and back.gpx': {
         'id': 'sa-calobra',
         'name': 'Sa Calobra',
         'subtitle': 'Port de Pollença → Sa Calobra and back',
@@ -73,7 +54,7 @@ route_meta = {
             "Mediterranean views at every turn and bring your climbing legs."
         )
     },
-    'Karoo-Port_de_Pollenca_-_Formentor_and_back.gpx': {
+    'Port de Pollenca - Formentor and back.gpx': {
         'id': 'formentor',
         'name': 'Cap de Formentor',
         'subtitle': 'Port de Pollença → Cap de Formentor lighthouse and back',
@@ -91,7 +72,7 @@ route_meta = {
             "watch for the tunnels cut through the rock near the lighthouse."
         )
     },
-    'Karoo-Pollensa_to_Santuari_de_Lluc_and_back.gpx': {
+    'Pollensa to Santuari de Lluc and back.gpx': {
         'id': 'pollensa-lluc',
         'name': 'Santuari de Lluc',
         'subtitle': 'Pollença → Santuari de Lluc and back',
@@ -109,7 +90,7 @@ route_meta = {
             "introduction to Mallorca's mountain roads."
         )
     },
-    'Karoo-Pollença,_Sineu,_Petra_-_FLAT.gpx': {
+    'Pollença, Sineu, Petra - FLAT.gpx': {
         'id': 'pollenca-sineu-petra',
         'name': 'Sineu and Petra',
         'subtitle': 'Pollença → Sineu → Petra loop',
@@ -127,7 +108,7 @@ route_meta = {
             "mountain climbing."
         )
     },
-    'Karoo-Port_de_Pollenca_-_flat_runde.gpx': {
+    'Port de Pollenca - flat runde.gpx': {
         'id': 'port-pollenca-flat',
         'name': 'Port de Pollença Flat Loop',
         'subtitle': 'Port de Pollença flat loop',
@@ -153,18 +134,15 @@ for f in sorted(os.listdir(gpx_dir)):
     tree = ET.parse(os.path.join(gpx_dir, f))
     root = tree.getroot()
     trkpts = root.findall('.//gpx:trkpt', ns)
-    coords = simplify_coords(trkpts)
+    coords, elevations = simplify_with_elevation(trkpts)
 
     meta = dict(route_meta[f])
     meta['region'] = 'Mallorca'
     meta['coordinates'] = coords
     meta['gpx'] = 'gpx/majorca/' + f
-
-    print(f"  Fetching elevations for {meta['id']} ({len(coords)} points)...")
-    elevations = fetch_elevations(coords)
     meta['elevation_profile'] = build_elevation_profile(coords, elevations)
-    print(f"    → {len(meta['elevation_profile'])} elevation points")
 
+    print(f"  {meta['id']}: {len(coords)} coords, {len(meta['elevation_profile'])} elevation points")
     routes.append(meta)
 
 terrain_order = {'all the hills': 0, 'some hills': 1, 'flat': 2}
@@ -176,4 +154,4 @@ with open(out_path, 'w', encoding='utf-8') as f:
 
 print(f'Generated routes.json with {len(routes)} routes')
 for r in routes:
-    print(f"  {r['id']}: {r['name']} ({r['distance_km']}km, {r['elevation_m']}m, {len(r['coordinates'])} coords)")
+    print(f"  {r['id']}: {r['name']} ({r['distance_km']}km, {r['elevation_m']}m)")
