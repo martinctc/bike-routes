@@ -34,13 +34,30 @@ def build_elevation_profile(coords, elevations):
             profile.append([round(cum_dist, 2), round(ele)])
     return profile
 
+def compute_full_stats(trkpts):
+    """Compute distance and elevation gain from ALL trackpoints for accuracy."""
+    cum_dist = 0.0
+    ele_gain = 0.0
+    prev_lat = prev_lon = prev_ele = None
+    for pt in trkpts:
+        lat = float(pt.get('lat'))
+        lon = float(pt.get('lon'))
+        ele_el = pt.find('gpx:ele', ns)
+        ele = float(ele_el.text) if ele_el is not None else None
+        if prev_lat is not None:
+            cum_dist += haversine(prev_lat, prev_lon, lat, lon)
+        if ele is not None and prev_ele is not None and ele > prev_ele:
+            ele_gain += ele - prev_ele
+        prev_lat, prev_lon = lat, lon
+        if ele is not None:
+            prev_ele = ele
+    return round(cum_dist / 1000.0), round(ele_gain)
+
 route_meta = {
     'Port de Pollenca - Sa Calobra and back.gpx': {
         'id': 'sa-calobra',
         'name': 'Sa Calobra',
         'subtitle': 'Port de Pollença → Sa Calobra and back',
-        'distance_km': 94,
-        'elevation_m': 1800,
         'type': 'out-and-back',
         'terrain': 'all the hills',
         'description': (
@@ -58,8 +75,6 @@ route_meta = {
         'id': 'formentor',
         'name': 'Cap de Formentor',
         'subtitle': 'Port de Pollença → Cap de Formentor lighthouse and back',
-        'distance_km': 40,
-        'elevation_m': 850,
         'type': 'out-and-back',
         'terrain': 'some hills',
         'description': (
@@ -76,8 +91,6 @@ route_meta = {
         'id': 'pollensa-lluc',
         'name': 'Santuari de Lluc',
         'subtitle': 'Pollença → Santuari de Lluc and back',
-        'distance_km': 64,
-        'elevation_m': 950,
         'type': 'loop',
         'terrain': 'some hills',
         'description': (
@@ -94,8 +107,6 @@ route_meta = {
         'id': 'pollenca-sineu-petra',
         'name': 'Sineu and Petra',
         'subtitle': 'Pollença → Sineu → Petra loop',
-        'distance_km': 83,
-        'elevation_m': 200,
         'type': 'loop',
         'terrain': 'flat',
         'description': (
@@ -112,8 +123,6 @@ route_meta = {
         'id': 'port-pollenca-flat',
         'name': 'Port de Pollença Flat Loop',
         'subtitle': 'Port de Pollença flat loop',
-        'distance_km': 67,
-        'elevation_m': 150,
         'type': 'loop',
         'terrain': 'flat',
         'description': (
@@ -141,8 +150,9 @@ for f in sorted(os.listdir(gpx_dir)):
     meta['coordinates'] = coords
     meta['gpx'] = 'gpx/majorca/' + f
     meta['elevation_profile'] = build_elevation_profile(coords, elevations)
+    meta['distance_km'], meta['elevation_m'] = compute_full_stats(trkpts)
 
-    print(f"  {meta['id']}: {len(coords)} coords, {len(meta['elevation_profile'])} elevation points")
+    print(f"  {meta['id']}: {meta['distance_km']}km, {meta['elevation_m']}m gain, {len(coords)} coords")
     routes.append(meta)
 
 terrain_order = {'all the hills': 0, 'some hills': 1, 'flat': 2}
