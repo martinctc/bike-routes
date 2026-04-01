@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Routes – Mallorca</title>
+    <meta name="description" content="A curated collection of cycling routes around Mallorca. Maps, distances, elevation, and descriptions for every ride.">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">Bike Routes</h1>
+            <p class="site-subtitle">A curated collection of two-wheeled adventures around Mallorca.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="filters" id="filters">
+            <button class="filter-btn active" data-filter="all">All routes</button>
+            <button class="filter-btn" data-filter="all the hills">All the hills</button>
+            <button class="filter-btn" data-filter="some hills">Some hills</button>
+            <button class="filter-btn" data-filter="flat">Flat</button>
+        </div>
+
+        <div class="route-count" id="route-count"></div>
+
+        <div class="routes-grid" id="routes-grid">
+            <!-- Route cards injected by JS -->
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Inspired by <a href="https://www.routes.cc" target="_blank" rel="noopener">routes.cc</a> · Built with <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a></p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

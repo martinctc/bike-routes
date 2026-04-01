@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route – Bike Routes</title>
+    <meta name="description" content="Cycling route details with interactive map, elevation, and GPX download.">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="route-page">
+    <header class="route-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← All routes</a>
+        </div>
+    </header>
+
+    <div class="route-hero" id="route-map-container">
+        <div id="route-map" class="route-map"></div>
+    </div>
+
+    <main class="container">
+        <article class="route-detail" id="route-detail">
+            <!-- Injected by JS -->
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Inspired by <a href="https://www.routes.cc" target="_blank" rel="noopener">routes.cc</a> · Built with <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a></p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/route.js"></script>
+</body>
+</html>
