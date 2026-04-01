@@ -251,7 +251,7 @@ function renderSparkline(elementId, profile) {
         var mouseX = e.clientX - rect.left;
         var pct = mouseX / rect.width;
         var dist = pct * maxDist;
-        if (dist < 0 || dist > maxDist) { cursor.style.display = 'none'; tip.style.display = 'none'; return; }
+        if (dist < 0 || dist > maxDist) { cursor.style.visibility = 'hidden'; tip.style.display = 'none'; return; }
 
         var closest = profile[0];
         for (var j = 1; j < profile.length; j++) {
@@ -260,14 +260,14 @@ function renderSparkline(elementId, profile) {
         var svgX = pct * w;
         cursor.setAttribute('x1', svgX);
         cursor.setAttribute('x2', svgX);
-        cursor.style.display = '';
+        cursor.style.visibility = 'visible';
         tip.style.display = 'block';
         tip.style.left = mouseX + 'px';
         tip.textContent = closest[1] + 'm · ' + closest[0].toFixed(1) + 'km';
     });
 
     el.addEventListener('mouseleave', function() {
-        cursor.style.display = 'none';
+        cursor.style.visibility = 'hidden';
         tip.style.display = 'none';
     });
 }
