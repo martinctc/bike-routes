@@ -353,9 +353,9 @@ route_meta = {
     },
     # London
     'BECC_Sunday_Social.gpx': {
-        'id': 'becc-sunday-social', 'region_id': 'london',
-        'name': 'BECC Sunday Social',
-        'subtitle': 'East London club ride through Essex lanes',
+        'id': 'epping-essex-loop', 'region_id': 'london',
+        'name': 'Epping & Essex Lanes',
+        'subtitle': 'Epping Forest → Essex countryside loop',
         'type': 'loop',
         'description': (
             "A popular Sunday club ride with the Bec CC, rolling through the quiet lanes "
@@ -372,8 +372,8 @@ route_meta = {
         ]
     },
     'ELCC_Box_Hill_Ride.gpx': {
-        'id': 'elcc-box-hill', 'region_id': 'london',
-        'name': 'Box Hill Ride',
+        'id': 'box-hill-surrey', 'region_id': 'london',
+        'name': 'Box Hill & Surrey Hills',
         'subtitle': 'South London → Box Hill → Surrey Hills loop',
         'type': 'loop',
         'description': (
@@ -394,9 +394,9 @@ route_meta = {
         ]
     },
     'ELCC_Easter_Classic.gpx': {
-        'id': 'elcc-easter-classic', 'region_id': 'london',
-        'name': 'Easter Classic',
-        'subtitle': 'East London CC Easter sportive through Kent and Surrey',
+        'id': 'kent-surrey-hills', 'region_id': 'london',
+        'name': 'Kent & North Downs',
+        'subtitle': 'London → Toys Hill → Ide Hill → Kent Weald loop',
         'type': 'loop',
         'description': (
             "The annual East London CC Easter Classic — an epic sportive-style ride through "
@@ -414,8 +414,8 @@ route_meta = {
     },
     # Snowdonia
     'North_Wales_coastal_ride.gpx': {
-        'id': 'snowdonia-coastal', 'region_id': 'snowdonia',
-        'name': 'North Wales Coastal Ride',
+        'id': 'anglesey-coastal', 'region_id': 'snowdonia',
+        'name': 'Anglesey & Menai Strait',
         'subtitle': 'Caernarfon → Anglesey coast → Menai Strait loop',
         'type': 'loop',
         'description': (
@@ -435,8 +435,8 @@ route_meta = {
         ]
     },
     'Slateman_Triathlon_Bike.gpx': {
-        'id': 'slateman-bike', 'region_id': 'snowdonia',
-        'name': 'Slateman Triathlon Bike',
+        'id': 'llanberis-pass', 'region_id': 'snowdonia',
+        'name': 'Llanberis Pass & Slate Valleys',
         'subtitle': 'Llanberis → Pen-y-Pass → Slate valleys loop',
         'type': 'loop',
         'description': (

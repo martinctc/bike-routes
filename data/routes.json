@@ -51961,10 +51961,10 @@
     "difficulty": "hard"
   },
   {
-    "id": "becc-sunday-social",
+    "id": "epping-essex-loop",
     "region_id": "london",
-    "name": "BECC Sunday Social",
-    "subtitle": "East London club ride through Essex lanes",
+    "name": "Epping & Essex Lanes",
+    "subtitle": "Epping Forest → Essex countryside loop",
     "type": "loop",
     "description": "A popular Sunday club ride with the Bec CC, rolling through the quiet lanes of Essex and Hertfordshire. The route heads north from London through Epping Forest before looping through rolling farmland and pretty villages. A sociable pace with a café stop midway. A great way to build endurance while enjoying the surprisingly rural countryside just outside the M25.",
     "stops": [
@@ -62739,10 +62739,10 @@
     "difficulty": "hard"
   },
   {
-    "id": "elcc-easter-classic",
+    "id": "kent-surrey-hills",
     "region_id": "london",
-    "name": "Easter Classic",
-    "subtitle": "East London CC Easter sportive through Kent and Surrey",
+    "name": "Kent & North Downs",
+    "subtitle": "London → Toys Hill → Ide Hill → Kent Weald loop",
     "type": "loop",
     "description": "The annual East London CC Easter Classic — an epic sportive-style ride through the lanes of Kent and Surrey. The route tackles the best climbs of the North Downs and Greensand Ridge, with punchy ascents like Toys Hill and Ide Hill thrown in for good measure. Long, challenging, and hugely rewarding, this ride is a proper test of spring fitness.",
     "stops": [
@@ -73677,9 +73677,9 @@
     "difficulty": "hard"
   },
   {
-    "id": "elcc-box-hill",
+    "id": "box-hill-surrey",
     "region_id": "london",
-    "name": "Box Hill Ride",
+    "name": "Box Hill & Surrey Hills",
     "subtitle": "South London → Box Hill → Surrey Hills loop",
     "type": "loop",
     "description": "The classic London cycling pilgrimage to Box Hill in the Surrey Hills. The route heads south through suburban London before hitting the rolling lanes of the North Downs. The zig-zag climb up Box Hill featured in the 2012 Olympic road race and is a rite of passage for any London cyclist. The café at the top is always buzzing with riders on weekends. Return via Leatherhead and quiet back roads.",
@@ -88995,9 +88995,9 @@
     "difficulty": "easy"
   },
   {
-    "id": "snowdonia-coastal",
+    "id": "anglesey-coastal",
     "region_id": "snowdonia",
-    "name": "North Wales Coastal Ride",
+    "name": "Anglesey & Menai Strait",
     "subtitle": "Caernarfon → Anglesey coast → Menai Strait loop",
     "type": "loop",
     "description": "A stunning coastal loop starting from Caernarfon, crossing the Menai Strait to Anglesey and following the coast past ancient castles and hidden coves. The riding is gently rolling with sea views throughout. The route passes through Beaumaris with its UNESCO World Heritage castle before returning across the Britannia Bridge with Snowdonia's peaks as a dramatic backdrop.",
@@ -96692,9 +96692,9 @@
     "difficulty": "hard"
   },
   {
-    "id": "slateman-bike",
+    "id": "llanberis-pass",
     "region_id": "snowdonia",
-    "name": "Slateman Triathlon Bike",
+    "name": "Llanberis Pass & Slate Valleys",
     "subtitle": "Llanberis → Pen-y-Pass → Slate valleys loop",
     "type": "loop",
     "description": "The bike leg of the Slateman Triathlon, widely regarded as one of the most scenic triathlon courses in the world. Starting from Llanberis at the foot of Snowdon, the route climbs through the dramatic Llanberis Pass to Pen-y-Pass before descending into the otherworldly slate quarry landscapes. Short but intense, with gradients over 10% and breathtaking mountain views at every turn.",
