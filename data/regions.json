@@ -31,5 +31,27 @@
     ],
     "route_count": 4,
     "total_km": 300
+  },
+  {
+    "id": "london",
+    "name": "London",
+    "subtitle": "Club rides through the Surrey Hills and the Home Counties.",
+    "center": [
+      51.3,
+      -0.1
+    ],
+    "route_count": 3,
+    "total_km": 400
+  },
+  {
+    "id": "snowdonia",
+    "name": "Snowdonia",
+    "subtitle": "Wild Welsh mountains, slate valleys, and coastal roads.",
+    "center": [
+      53.05,
+      -4.05
+    ],
+    "route_count": 2,
+    "total_km": 135
   }
 ]

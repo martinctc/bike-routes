@@ -92,6 +92,20 @@ regions = {
         'center': [38.64, -0.05],
         'folder': 'calpe',
     },
+    'london': {
+        'id': 'london',
+        'name': 'London',
+        'subtitle': 'Club rides through the Surrey Hills and the Home Counties.',
+        'center': [51.3, -0.1],
+        'folder': 'london',
+    },
+    'snowdonia': {
+        'id': 'snowdonia',
+        'name': 'Snowdonia',
+        'subtitle': 'Wild Welsh mountains, slate valleys, and coastal roads.',
+        'center': [53.05, -4.05],
+        'folder': 'snowdonia',
+    },
 }
 
 # ── Route metadata per GPX file ────────────────────────────────────
@@ -335,6 +349,108 @@ route_meta = {
              'note': 'The iconic 332m limestone rock jutting into the sea.'},
             {'name': 'Altea old town', 'type': 'coffee', 'lat': 38.5990, 'lon': -0.0510,
              'note': 'White-washed hilltop town with a blue-domed church and great cafés.'},
+        ]
+    },
+    # London
+    'BECC_Sunday_Social.gpx': {
+        'id': 'becc-sunday-social', 'region_id': 'london',
+        'name': 'BECC Sunday Social',
+        'subtitle': 'East London club ride through Essex lanes',
+        'type': 'loop',
+        'description': (
+            "A popular Sunday club ride with the Bec CC, rolling through the quiet lanes "
+            "of Essex and Hertfordshire. The route heads north from London through Epping "
+            "Forest before looping through rolling farmland and pretty villages. A sociable "
+            "pace with a café stop midway. A great way to build endurance while enjoying "
+            "the surprisingly rural countryside just outside the M25."
+        ),
+        'stops': [
+            {'name': 'Epping Forest', 'type': 'photo', 'lat': 51.6650, 'lon': 0.0450,
+             'note': 'Ancient woodland — enjoy the shade and the deer.'},
+            {'name': 'Village café stop', 'type': 'coffee', 'lat': 51.7500, 'lon': 0.0800,
+             'note': 'Mid-ride café in the Essex lanes. Cake is compulsory.'},
+        ]
+    },
+    'ELCC_Box_Hill_Ride.gpx': {
+        'id': 'elcc-box-hill', 'region_id': 'london',
+        'name': 'Box Hill Ride',
+        'subtitle': 'South London → Box Hill → Surrey Hills loop',
+        'type': 'loop',
+        'description': (
+            "The classic London cycling pilgrimage to Box Hill in the Surrey Hills. The "
+            "route heads south through suburban London before hitting the rolling lanes of "
+            "the North Downs. The zig-zag climb up Box Hill featured in the 2012 Olympic "
+            "road race and is a rite of passage for any London cyclist. The café at the top "
+            "is always buzzing with riders on weekends. Return via Leatherhead and quiet "
+            "back roads."
+        ),
+        'stops': [
+            {'name': 'Box Hill summit', 'type': 'photo', 'lat': 51.2570, 'lon': -0.3140,
+             'note': 'The Olympic climb. Celebrate at the top with that view.'},
+            {'name': 'Box Hill café', 'type': 'coffee', 'lat': 51.2580, 'lon': -0.3130,
+             'note': 'The National Trust café — always packed with cyclists.'},
+            {'name': 'Newlands Corner', 'type': 'rest', 'lat': 51.2280, 'lon': -0.4920,
+             'note': 'Panoramic views over the Surrey countryside.'},
+        ]
+    },
+    'ELCC_Easter_Classic.gpx': {
+        'id': 'elcc-easter-classic', 'region_id': 'london',
+        'name': 'Easter Classic',
+        'subtitle': 'East London CC Easter sportive through Kent and Surrey',
+        'type': 'loop',
+        'description': (
+            "The annual East London CC Easter Classic — an epic sportive-style ride through "
+            "the lanes of Kent and Surrey. The route tackles the best climbs of the North "
+            "Downs and Greensand Ridge, with punchy ascents like Toys Hill and Ide Hill "
+            "thrown in for good measure. Long, challenging, and hugely rewarding, this ride "
+            "is a proper test of spring fitness."
+        ),
+        'stops': [
+            {'name': 'Ide Hill', 'type': 'photo', 'lat': 51.2530, 'lon': 0.0880,
+             'note': 'One of the steepest climbs in Kent. Beautiful at the top.'},
+            {'name': 'Westerham café', 'type': 'coffee', 'lat': 51.2650, 'lon': 0.0720,
+             'note': 'Charming town for a mid-ride refuel.'},
+        ]
+    },
+    # Snowdonia
+    'North_Wales_coastal_ride.gpx': {
+        'id': 'snowdonia-coastal', 'region_id': 'snowdonia',
+        'name': 'North Wales Coastal Ride',
+        'subtitle': 'Caernarfon → Anglesey coast → Menai Strait loop',
+        'type': 'loop',
+        'description': (
+            "A stunning coastal loop starting from Caernarfon, crossing the Menai Strait "
+            "to Anglesey and following the coast past ancient castles and hidden coves. The "
+            "riding is gently rolling with sea views throughout. The route passes through "
+            "Beaumaris with its UNESCO World Heritage castle before returning across the "
+            "Britannia Bridge with Snowdonia's peaks as a dramatic backdrop."
+        ),
+        'stops': [
+            {'name': 'Beaumaris Castle', 'type': 'photo', 'lat': 53.2630, 'lon': -4.0910,
+             'note': 'UNESCO World Heritage castle right on the Menai Strait.'},
+            {'name': 'Café in Menai Bridge', 'type': 'coffee', 'lat': 53.2255, 'lon': -4.1630,
+             'note': 'Great cafés in the town by the suspension bridge.'},
+            {'name': 'Caernarfon Castle', 'type': 'photo', 'lat': 53.1390, 'lon': -4.2770,
+             'note': 'Magnificent castle at the start/finish — worth a wander.'},
+        ]
+    },
+    'Slateman_Triathlon_Bike.gpx': {
+        'id': 'slateman-bike', 'region_id': 'snowdonia',
+        'name': 'Slateman Triathlon Bike',
+        'subtitle': 'Llanberis → Pen-y-Pass → Slate valleys loop',
+        'type': 'loop',
+        'description': (
+            "The bike leg of the Slateman Triathlon, widely regarded as one of the most "
+            "scenic triathlon courses in the world. Starting from Llanberis at the foot of "
+            "Snowdon, the route climbs through the dramatic Llanberis Pass to Pen-y-Pass "
+            "before descending into the otherworldly slate quarry landscapes. Short but "
+            "intense, with gradients over 10% and breathtaking mountain views at every turn."
+        ),
+        'stops': [
+            {'name': 'Pen-y-Pass', 'type': 'photo', 'lat': 53.0685, 'lon': -4.0230,
+             'note': 'The famous mountain pass — Snowdon trailhead with epic views.'},
+            {'name': 'Pete\'s Eats, Llanberis', 'type': 'coffee', 'lat': 53.1190, 'lon': -4.1290,
+             'note': 'Legendary climber and cyclist café. Massive portions.'},
         ]
     },
 }
