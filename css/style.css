@@ -312,7 +312,7 @@ img {
 /* ---- Routes Grid ---- */
 .routes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.75rem;
     padding-bottom: 4rem;
 }
@@ -729,6 +729,12 @@ img {
 }
 
 /* ---- Responsive ---- */
+@media (max-width: 1024px) {
+    .routes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .site-header {
         padding: 3rem 0 1.5rem;
