@@ -90,21 +90,18 @@ function renderMapWithElevation(route) {
     });
 
     var geojson = {
-        type: "Feature",
-        properties: { name: route.name },
-        geometry: {
-            type: "LineString",
-            coordinates: geojsonCoords
-        }
+        type: "FeatureCollection",
+        features: [{
+            type: "Feature",
+            properties: { name: route.name },
+            geometry: {
+                type: "LineString",
+                coordinates: geojsonCoords
+            }
+        }]
     };
 
-    elevationControl.load(geojson);
-
-    // Fit bounds to route
-    var coords2d = route.coordinates.map(function(c) { return [c[0], c[1]]; });
-    if (coords2d.length > 1) {
-        map.fitBounds(L.latLngBounds(coords2d), { padding: [40, 40] });
-    }
+    elevationControl.load(JSON.stringify(geojson));
 
     // Start and end markers
     var coords = route.coordinates;
