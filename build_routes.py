@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
-import os, math, json
+import os, math, json, time, hashlib
+import urllib.request
 
 base_dir = r'C:\Users\martinchan\OneDrive\Triathlon\bike-routes'
 gpx_base = os.path.join(base_dir, 'gpx')
@@ -51,6 +52,18 @@ def compute_full_stats(trkpts):
             prev_ele = ele
     return round(cum_dist / 1000.0), round(ele_gain)
 
+def compute_full_distance(trkpts):
+    """Compute total distance in km from all trackpoints (full resolution)."""
+    cum_dist = 0.0
+    prev_lat = prev_lon = None
+    for pt in trkpts:
+        lat = float(pt.get('lat'))
+        lon = float(pt.get('lon'))
+        if prev_lat is not None:
+            cum_dist += haversine(prev_lat, prev_lon, lat, lon)
+        prev_lat, prev_lon = lat, lon
+    return round(cum_dist / 1000.0)
+
 def compute_difficulty(distance_km, elevation_m):
     steepness = elevation_m / max(distance_km, 1)
     score = distance_km * 0.3 + elevation_m * 0.04 + steepness * 3
@@ -67,6 +80,81 @@ def classify_terrain(elevation_m, distance_km):
     elif steepness > 8:
         return 'some hills'
     return 'flat'
+
+# ── OpenTopoData elevation API ─────────────────────────────────────
+
+OPENTOPODATA_URL = 'https://api.opentopodata.org/v1/eudem25m'
+CACHE_FILE = os.path.join(base_dir, 'data', 'elevation_cache.json')
+
+def load_elevation_cache():
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE, encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+def save_elevation_cache(cache):
+    with open(CACHE_FILE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, indent=2)
+
+def coords_hash(coords):
+    """Hash sampled coordinates for cache invalidation."""
+    s = '|'.join(f'{lat:.5f},{lon:.5f}' for lat, lon in coords)
+    return hashlib.md5(s.encode()).hexdigest()[:12]
+
+def query_opentopodata(coords, retries=3):
+    """Query OpenTopoData EU-DEM 25m for elevation at [(lat, lon), ...]."""
+    elevations = []
+    batch_size = 100
+    for i in range(0, len(coords), batch_size):
+        batch = coords[i:i+batch_size]
+        locations = '|'.join(f'{lat},{lon}' for lat, lon in batch)
+        url = f'{OPENTOPODATA_URL}?locations={locations}&interpolation=bilinear'
+        for attempt in range(retries):
+            try:
+                resp = urllib.request.urlopen(url, timeout=30)
+                data = json.loads(resp.read())
+                if data['status'] != 'OK':
+                    raise ValueError(f"API error: {data.get('error', 'unknown')}")
+                for r in data['results']:
+                    elevations.append(r['elevation'])
+                break
+            except Exception as e:
+                if attempt < retries - 1:
+                    print(f"    Retry {attempt+1} for batch {i//batch_size}: {e}")
+                    time.sleep(2)
+                else:
+                    raise
+        if i + batch_size < len(coords):
+            time.sleep(1.1)
+    return elevations
+
+def smooth_elevations(elevations, window=5):
+    """Moving average smoothing to reduce DEM noise."""
+    smoothed = []
+    half = window // 2
+    for i in range(len(elevations)):
+        start = max(0, i - half)
+        end = min(len(elevations), i + half + 1)
+        vals = [e for e in elevations[start:end] if e is not None]
+        smoothed.append(round(sum(vals) / len(vals), 1) if vals else 0)
+    return smoothed
+
+def compute_gain_with_threshold(elevations, threshold=3):
+    """Compute elevation gain, ignoring changes < threshold to filter noise."""
+    gain = 0.0
+    last_sig = None
+    for ele in elevations:
+        if ele is None:
+            continue
+        if last_sig is None:
+            last_sig = ele
+            continue
+        diff = ele - last_sig
+        if abs(diff) >= threshold:
+            if diff > 0:
+                gain += diff
+            last_sig = ele
+    return round(gain)
 
 # ── Region definitions ──────────────────────────────────────────────
 
@@ -458,6 +546,9 @@ route_meta = {
 # ── Build routes and regions ───────────────────────────────────────
 
 all_routes = []
+elevation_cache = load_elevation_cache()
+cache_updated = False
+
 for region_id, region in regions.items():
     folder = os.path.join(gpx_base, region['folder'])
     print(f"\n{region['name'].upper()}")
@@ -467,20 +558,70 @@ for region_id, region in regions.items():
         tree = ET.parse(os.path.join(folder, f))
         root = tree.getroot()
         trkpts = root.findall('.//gpx:trkpt', ns)
-        coords, elevations = simplify_with_elevation(trkpts)
+
+        # Extract all lat/lon from trackpoints
+        all_pts = [(float(pt.get('lat')), float(pt.get('lon'))) for pt in trkpts]
+
+        # Adaptive sampling: target ~400 points per route
+        target = 400
+        sample_rate = max(1, len(all_pts) // target)
+        sampled = [all_pts[i] for i in range(0, len(all_pts), sample_rate)]
+        if all_pts[-1] != sampled[-1]:
+            sampled.append(all_pts[-1])
+
+        # Check elevation cache
+        cache_key = f"{region['folder']}/{f}"
+        h = coords_hash(sampled)
+        cached = elevation_cache.get(cache_key, {})
+        if cached.get('hash') == h and len(cached.get('elevations', [])) == len(sampled):
+            elevations = cached['elevations']
+            print(f"  {f}: using cached elevation ({len(sampled)} pts)")
+        else:
+            n_calls = (len(sampled) + 99) // 100
+            print(f"  {f}: querying OpenTopoData ({len(sampled)} pts, {n_calls} API calls)...")
+            elevations = query_opentopodata(sampled)
+            elevation_cache[cache_key] = {'hash': h, 'elevations': elevations}
+            cache_updated = True
+
+        # Smooth elevation: heavy for visualization, lighter for gain
+        smoothed_viz = smooth_elevations(elevations, window=5)
+        smoothed_gain = smooth_elevations(elevations, window=3)
+
+        # Build 3D coordinates [lat, lon, ele] for map + Leaflet-Elevation
+        coords_3d = [
+            [round(pt[0], 5), round(pt[1], 5), round(ele, 1)]
+            for pt, ele in zip(sampled, smoothed_viz)
+        ]
+
+        # Build elevation profile [dist_km, ele_m] for sparklines on cards
+        profile = []
+        cum_dist = 0.0
+        for i, (pt, ele) in enumerate(zip(sampled, smoothed_viz)):
+            if i > 0:
+                cum_dist += haversine(sampled[i-1][0], sampled[i-1][1], pt[0], pt[1]) / 1000
+            profile.append([round(cum_dist, 2), round(ele)])
+
+        # Compute stats: distance from all GPX points, gain from lighter smoothing
+        distance_km = compute_full_distance(trkpts)
+        elevation_m = compute_gain_with_threshold(smoothed_gain, threshold=3)
 
         meta = dict(route_meta[f])
         meta['region'] = region['name']
         meta['region_id'] = region_id
-        meta['coordinates'] = coords
+        meta['coordinates'] = coords_3d
         meta['gpx'] = 'gpx/' + region['folder'] + '/' + f
-        meta['elevation_profile'] = build_elevation_profile(coords, elevations)
-        meta['distance_km'], meta['elevation_m'] = compute_full_stats(trkpts)
-        meta['terrain'] = meta.get('terrain') or classify_terrain(meta['elevation_m'], meta['distance_km'])
-        meta['difficulty'] = compute_difficulty(meta['distance_km'], meta['elevation_m'])
+        meta['elevation_profile'] = profile
+        meta['distance_km'] = distance_km
+        meta['elevation_m'] = elevation_m
+        meta['terrain'] = meta.get('terrain') or classify_terrain(elevation_m, distance_km)
+        meta['difficulty'] = compute_difficulty(distance_km, elevation_m)
 
-        print(f"  {meta['id']}: {meta['distance_km']}km, {meta['elevation_m']}m, {meta['difficulty']}")
+        print(f"  {meta['id']}: {distance_km}km, {elevation_m}m, {meta['difficulty']}")
         all_routes.append(meta)
+
+if cache_updated:
+    save_elevation_cache(elevation_cache)
+    print(f"\nElevation cache saved to {CACHE_FILE}")
 
 terrain_order = {'all the hills': 0, 'some hills': 1, 'flat': 2}
 all_routes.sort(key=lambda r: (r['region_id'], terrain_order.get(r['terrain'], 99), -r['distance_km']))
